@@ -23,9 +23,9 @@ then
             name="Mikael Grön"
             if [ "$1" = "work" ]
             then
-                email=$private_email
-            else
                 email=$work_email
+            else
+                email=$private_email
             fi
             git config user.name $name
             git config user.email $email
