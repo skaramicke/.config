@@ -60,6 +60,10 @@ then
         fi
     }
 
+    unusedsteps() {
+        behave -f steps.usage --dry-run 2>/dev/null | awk '/UNUSED STEP DEFINITIONS/','/UNDEFINED/'|grep @
+    }
+
 else
     echo "Vars file does not exist. Copy the example file to $vars_path"
 fi
