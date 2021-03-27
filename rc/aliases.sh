@@ -64,6 +64,20 @@ then
         behave -f steps.usage --dry-run 2>/dev/null | awk '/UNUSED STEP DEFINITIONS/','/UNDEFINED/'|grep @
     }
 
+    elmanalyse() {
+	    bash -c "! elm-analyse | awk '/Messages:/',EOF | grep -v 'Record has only one field' || exit 1"
+    }
+
+    rebase() {
+        if git remote show origin | grep -q "mikael.gron"; then
+            branch=`git rev-parse --abbrev-ref HEAD`
+            git fetch upstream
+            git rebase "upstream/$branch"
+        else
+            echo "unsafe"
+        fi
+    }
+
 else
     echo "Vars file does not exist. Copy the example file to $vars_path"
 fi
