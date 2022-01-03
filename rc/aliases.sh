@@ -78,6 +78,11 @@ then
         fi
     }
 
+    rc() {
+        source "${rc_dir}/rc.sh"
+    }
+
+
 else
     echo "Vars file does not exist. Copy the example file to $vars_path"
 fi
