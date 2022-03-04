@@ -83,6 +83,26 @@ then
     }
 
 
+    uncompose() {
+        returnto=$(pwd)
+        paths=`docker ps| grep -v CONTAINER | awk '{print $1}' | xargs -I {} docker inspect {} | grep working_dir | sed -En 's/\s+"[^"]+": "([^"]+)",/\1/p' | sort | uniq`
+	for path in $paths; do
+            echo "Downing docker-compose in $path"
+            cd $path
+            docker-compose down
+	done
+        cd $returnto
+    }
+
+    checkport() {
+        echo "Checking what is listening on port $1..."
+        lsof -i ":$1"
+    }
+
+    removebranches() {
+        for branch in $(git branch|grep -v "*"); do git branch -d "$branch"; done
+    }
+
 else
     echo "Vars file does not exist. Copy the example file to $vars_path"
 fi
