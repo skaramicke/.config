@@ -103,6 +103,11 @@ then
         docker-compose down
     }
 
+    dup() {
+        down
+        up
+    }
+
     logs() {
         docker-compose logs -f $1
     }
@@ -113,8 +118,7 @@ then
     }
 
     dupl() {
-        down
-        up
+        dup
         logs $1
     }
 
