@@ -83,7 +83,7 @@ then
     }
 
 
-    uncompose() {
+    decompose() {
         returnto=$(pwd)
         paths=`docker ps| grep -v CONTAINER | awk '{print $1}' | xargs -I {} docker inspect {} | grep working_dir | sed -En 's/\s+"[^"]+": "([^"]+)",/\1/p' | sort | uniq`
 	for path in $paths; do
@@ -92,6 +92,30 @@ then
             docker-compose down
 	done
         cd $returnto
+    }
+
+    up() {
+        docker-compose up -d
+    }
+
+        
+    down() {
+        docker-compose down
+    }
+
+    logs() {
+        docker-compose logs -f $1
+    }
+
+    upl() {
+        up
+        logs $1
+    }
+
+    dupl() {
+        down
+        up
+        logs $1
     }
 
     checkport() {
