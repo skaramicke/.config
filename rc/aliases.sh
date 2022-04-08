@@ -95,17 +95,22 @@ then
     }
 
     up() {
-        docker-compose up -d
+        docker-compose up -d $1
     }
 
         
     down() {
-        docker-compose down
+        docker-compose down $1
     }
 
     dup() {
-        down
-        up
+        if [ $1 != "" ]; then
+            docker-compose stop $1
+            docker-compose up -d $1
+        else
+            down
+            up
+        fi
     }
 
     logs() {
